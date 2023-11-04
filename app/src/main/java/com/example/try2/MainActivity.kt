@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -114,6 +117,22 @@ fun MyApp(modifier: Modifier = Modifier){
     Scaffold(
 
 
+        floatingActionButton = {
+
+                               FloatingActionButton(onClick = { /*TODO*/ },
+                                   shape = RoundedCornerShape( topEnd = 70.dp,bottomStart = 70.dp),
+                                   containerColor = Color(0xFFE0A9A5),
+                                   modifier = modifier.rotate(30f)
+
+                                   ) {
+                                   Icon(
+                                       imageVector = Icons.Default.Add, contentDescription = "add ", modifier = modifier.rotate(-30f)
+                                   )
+
+                               }
+
+        },
+
         topBar = {
                  TopAppBar( title = {
                      Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center){
@@ -121,7 +140,9 @@ fun MyApp(modifier: Modifier = Modifier){
                      }
 
                  },
-                     modifier.padding(10.dp).clip( RoundedCornerShape(20)),
+                     modifier
+                         .padding(10.dp)
+                         .clip(RoundedCornerShape(20)),
                      navigationIcon = {
                          IconButton(onClick = { /*TODO*/ }) {
                              Icon(imageVector = Icons.Default.Menu, contentDescription = " Menu icon")
