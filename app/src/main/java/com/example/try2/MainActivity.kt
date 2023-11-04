@@ -5,18 +5,27 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -24,6 +33,9 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,7 +72,7 @@ data class NavItemState(
     val SelectedIcon: ImageVector,
     val unSelectedIcon: ImageVector,
     val hasBadge : Boolean,
-    val badgeNum : Int
+    var badgeNum : Int
 
 )
 
@@ -100,6 +112,54 @@ fun MyApp(modifier: Modifier = Modifier){
         mutableStateOf(0 )
     }
     Scaffold(
+
+
+        topBar = {
+                 TopAppBar( title = {
+                     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                         Text("Top App Bar" )
+                     }
+
+                 },
+                     modifier.padding(10.dp).clip( RoundedCornerShape(20)),
+                     navigationIcon = {
+                         IconButton(onClick = { /*TODO*/ }) {
+                             Icon(imageVector = Icons.Default.Menu, contentDescription = " Menu icon")
+                             
+                         }
+                     },
+
+                     actions = {
+                         IconButton(onClick = { /*TODO*/ }) {
+                             BadgedBox( badge = {
+                                 Badge(modifier.size(10.dp)){}
+
+                             }
+
+                             ) {
+
+                                 Icon(
+                                     imageVector = Icons.Outlined.FavoriteBorder,
+                                     contentDescription = " Favorite icon"
+                                 )
+                             }
+
+                         }
+                         IconButton(onClick = { /*TODO*/ }) {
+                             Icon(imageVector = Icons.Outlined.ShoppingCart, contentDescription = " ShoppingCart icon")
+
+                         }
+                     },
+                     colors = TopAppBarDefaults.smallTopAppBarColors(
+                          containerColor = Color(0xFFE0A9A5)
+                     )
+
+
+                 )
+
+        },
+
+
         bottomBar = {
 
             NavigationBar(
@@ -115,7 +175,11 @@ fun MyApp(modifier: Modifier = Modifier){
 
 
                     NavigationBarItem(selected =  bottomNavState == index,
-                        onClick = { bottomNavState = index },
+                        onClick = { bottomNavState = index
+                            if(item.badgeNum>0) item.badgeNum -= 1
+
+
+                                  },
                         icon = {
                             BadgedBox(badge = {
                                 if(item.hasBadge) Badge{}
